@@ -1,3 +1,76 @@
-[gd_scene format=2]
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Fonts/MinimalFont5x7.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Fonts/Gamer.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 2 )
 
 [node name="Main" type="Node2D"]
+
+[node name="StartScreen" type="Node2D" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="StartScreen"]
+margin_left = -0.66626
+margin_right = 399.334
+margin_bottom = 240.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameTitle" type="Label" parent="StartScreen"]
+margin_right = 399.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Magnificent Magnets"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MyName" type="Label" parent="StartScreen"]
+margin_top = 51.6657
+margin_right = 398.0
+margin_bottom = 121.666
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "A GMTK 2021 Game
+By Joshua Dyer"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="StartScreen"]
+margin_top = 120.0
+margin_right = 400.0
+margin_bottom = 220.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSplitContainer" type="VSplitContainer" parent="StartScreen/CenterContainer"]
+margin_left = 200.0
+margin_top = 50.0
+margin_right = 200.0
+margin_bottom = 50.0
+
+[node name="SinglePlayer" type="Button" parent="StartScreen/CenterContainer/VSplitContainer"]
+margin_right = 93.0
+margin_bottom = 20.0
+text = "Single Player"
+
+[node name="TwoPlayer" type="Button" parent="StartScreen/CenterContainer/VSplitContainer"]
+margin_top = 32.0
+margin_right = 93.0
+margin_bottom = 52.0
+text = "Two Player"
