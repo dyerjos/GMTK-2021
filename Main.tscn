@@ -54,10 +54,10 @@ text = "Time"
 [node name="World" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 88.5546, 183.915 )
+position = Vector2( 90.6414, 186.002 )
 
 [node name="Player2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 275.986, 186.028 )
+position = Vector2( 288.971, 231.474 )
 player_id = 2
 
 [node name="ScreenBoundary" type="StaticBody2D" parent="."]
@@ -129,3 +129,5 @@ margin_bottom = 52.0
 text = "Two Player"
 
 [node name="Player2Position" type="Position2D" parent="StartScreen"]
+
+[editable path="Player2"]

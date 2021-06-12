@@ -11,15 +11,29 @@ export (int) var JUMP_FORCE = 300
 export (int) var MAX_SLOPE_ANGLE = 46
 export (String) var greenColor = "e5ff00" # player 2 color
 
+#enum {
+#	MOVE,
+#	PUSH_PULL
+#}
+
+#var state = MOVE
 var motion = Vector2.ZERO
 var snap_vector = Vector2.ZERO
 var direction = 1 # left = -1, right = 1
 var is_rotating = false
 var just_jumped = false
 var double_jump = true
-var is_magnetized = false
+var is_magnetized = true
+var is_connected = false
+var carried_by = null
+var is_carrying = false
+var target = null
 
 onready var jumpTimer = $JumpTimer
+onready var northJoint = $NorthJoint
+onready var southJoint = $SouthJoint
+onready var northStaticBody = $NorthStaticBody
+onready var southStaticBody = $SouthStaticBody
 
 func _ready() -> void:
 	if player_id == 2:
@@ -27,6 +41,9 @@ func _ready() -> void:
 
 func _physics_process(delta):
 	just_jumped = false
+	
+#	match state:
+#		MOVE:
 	var input_vector = get_input_vector()
 	apply_horizontal_force(input_vector, delta)
 	apply_friction(input_vector)
@@ -36,6 +53,9 @@ func _physics_process(delta):
 #	update_animations(input_vector) # TODO: delete this?
 	move()
 	apply_polarity()
+		
+#		PUSH_PULL:
+#			move()
 
 func get_input_vector():
 	var input_vector = Vector2.ZERO
@@ -79,7 +99,7 @@ func apply_gravity(delta):
 		motion.y += GRAVITY * delta
 		motion.y = min(motion.y, JUMP_FORCE)
 		
-func update_animations(input_vector):
+#func update_animations(input_vector):
 #	print('updating animations')
 #	var facing = sign(get_local_mouse_position().x)
 #	if facing != 0:
@@ -94,7 +114,7 @@ func update_animations(input_vector):
 #
 #	if not is_on_floor():
 #		spriteAnimator.play("Jump")
-	pass
+#	pass
 
 func move():
 	var was_in_air = not is_on_floor()
@@ -123,8 +143,48 @@ func rotate_player():
 	var degree_rate = 5
 	self.rotation_degrees += degree_rate * direction 
 
-func _on_NorthPole_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.
+func _on_NorthPole_area_entered(area: Area2D):
+	print(player_id)
+	if "NorthPole" in area.name and is_magnetized:
+		# repel
+#		var other_player = area.get_parent()
+#		var other_players_northAdjacentPosition = other_player.get_node("NorthAdjacentPosition").rect_position
+		is_connected = false
+		print("repel")
+	if "SouthPole" in area.name and is_magnetized:
+		# opposites attract
+		var other_player = area.get_parent()
+		
+		northJoint.node_b = other_player.get_node("SouthStaticBody")
+		
+#		var attaching_to = other_player.get_node("SouthAdjacentPosition")
+##		var other_player_global = other_player.global_position
+#		var other_players_southAdjacentPosition = other_player.get_node("SouthAdjacentPosition").rect_position
+##		print('south global pos %s' % other_players_southAdjacentPosition )
+##		print('my position is %s' % self.position)
+##		self.global_position = other_player.to_global(other_players_southAdjacentPosition)
+#		print("target: %s" % target)
+#		is_connected = true
 
-func _on_SouthPole_area_entered(area: Area2D) -> void:
-	pass # Replace with function body.
+		print("attract")
+		print("------------")
+
+func _on_SouthPole_area_entered(area: Area2D):
+	if "NorthPole" in area.name and is_magnetized:
+		var other_player = area.get_parent()
+		
+		southJoint.node_b = other_player.get_node("NorthStaticBody")
+		
+#		var attaching_to = other_player.get_node("NorthAdjacentPosition")
+##		var other_player_global = other_player.global_position
+#		var other_players_northAdjacentPosition = other_player.get_node("NorthAdjacentPosition").rect_position
+##		print('south global pos %s' % other_players_southAdjacentPosition )
+##		print('my position is %s' % self.position)
+#		self.global_position = other_player.to_global(other_players_northAdjacentPosition)
+#		print("target: %s" % target)
+#		is_connected = true
+
+		print("attract")
+		print("------------")
+	if "SouthPole" in area.name and is_magnetized:
+		pass

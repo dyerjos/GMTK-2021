@@ -2,7 +2,7 @@ extends Node2D
 
 var total_players = 0
 var current_player_count = 0
-var EndGame = load('res://Levels/EndGame.tscn')
+#var EndGame = load('res://Levels/EndGame.tscn')
 var time = 0
 
 #func _ready():
