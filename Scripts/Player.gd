@@ -10,10 +10,10 @@ export (int) var GRAVITY = 800
 export (int) var JUMP_FORCE = 300
 export (int) var MAX_SLOPE_ANGLE = 46
 
-#var velocity = Vector2.ZERO
-
 var motion = Vector2.ZERO
 var snap_vector = Vector2.ZERO
+var direction = 1 # left = -1, right = 1
+var is_rotating = false
 var just_jumped = false
 var double_jump = true
 
@@ -27,20 +27,21 @@ func _physics_process(delta):
 	update_snap_vector()
 	jump_check()
 	apply_gravity(delta)
-#	update_animations(input_vector)
+	update_animations(input_vector)
 	move()
 	polarity_check()
 
 func get_input_vector():
 	var input_vector = Vector2.ZERO
 	input_vector.x = Input.get_action_strength("move_right_player" + str(player_id)) - Input.get_action_strength("move_left_player" + str(player_id))
+	direction = input_vector.x
 	return input_vector
 	
 func apply_horizontal_force(input_vector, delta):
 	if input_vector.x != 0:
 		motion.x += input_vector.x * ACCELERATION * delta
 		motion.x = clamp(motion.x, -MAX_SPEED, MAX_SPEED)
-#		rotate_player()
+		rotate_player()
 
 func apply_friction(input_vector):
 	if input_vector.x == 0 and is_on_floor():
@@ -64,8 +65,6 @@ func jump_check():
 			double_jump = false
 
 func jump(force):
-#	SoundFX.play("Jump", rand_range(0.8, 1.1), -5)
-#	Utils.instance_scene_on_main(JumpEffect, global_position)
 	motion.y = -force
 	snap_vector = Vector2.ZERO
 
@@ -75,7 +74,8 @@ func apply_gravity(delta):
 		motion.y = min(motion.y, JUMP_FORCE)
 		
 func update_animations(input_vector):
-	print('updating animations')
+#	print('updating animations')
+	pass
 #	var facing = sign(get_local_mouse_position().x)
 #	if facing != 0:
 #		sprite.scale.x = facing
@@ -100,7 +100,6 @@ func move():
 	# Landing
 	if was_in_air and is_on_floor():
 		motion.x = last_motion.x
-#		Utils.instance_scene_on_main(JumpEffect, global_position)
 		double_jump = true
 	
 	# Just left ground
@@ -110,20 +109,18 @@ func move():
 		jumpTimer.start()
 	
 	# Prevent Sliding (hack)
-	if is_on_floor() and get_floor_velocity().length() == 0 and abs(motion.x) < 1:
-		position.x = last_position.x
+#	if is_on_floor() and get_floor_velocity().length() == 0 and abs(motion.x) < 1:
+#		position.x = last_position.x
 
 func polarity_check():
 	if Input.is_action_just_pressed("move_down_player" + str(player_id)):
-		apply_magnetic_force()
-		
-func apply_magnetic_force():
-	print('magnetic force is now activated. north and south poles are magnetized')
+		print('magnetic force is now activated. north and south poles are magnetized')
 
 func rotate_player():
-	var ninety_degrees = 90
-	var degree_rate = 1
-	while ninety_degrees > 0:
-		self.rotation_degrees += degree_rate
-		ninety_degrees -= degree_rate
-		yield(get_tree().create_timer(0.2), "timeout")
+#	var ninety_degrees = 90
+	var degree_rate = 5
+	self.rotation_degrees += degree_rate * direction 
+#	while ninety_degrees > 0:
+#		self.rotation_degrees += degree_rate
+#		ninety_degrees -= degree_rate
+#		yield(get_tree().create_timer(0.2), "timeout")
