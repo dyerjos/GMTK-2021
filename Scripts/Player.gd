@@ -9,7 +9,7 @@ export (float) var FRICTION = 0.25
 export (int) var GRAVITY = 800
 export (int) var JUMP_FORCE = 300
 export (int) var MAX_SLOPE_ANGLE = 46
-export (String) var greenColor = "afff00" # player 2 color
+export (String) var greenColor = "e5ff00" # player 2 color
 
 var motion = Vector2.ZERO
 var snap_vector = Vector2.ZERO
@@ -17,6 +17,7 @@ var direction = 1 # left = -1, right = 1
 var is_rotating = false
 var just_jumped = false
 var double_jump = true
+var is_magnetized = false
 
 onready var jumpTimer = $JumpTimer
 
@@ -29,12 +30,12 @@ func _physics_process(delta):
 	var input_vector = get_input_vector()
 	apply_horizontal_force(input_vector, delta)
 	apply_friction(input_vector)
-	update_snap_vector()
+#	update_snap_vector() # TODO: delete this?
 	jump_check()
 	apply_gravity(delta)
-	update_animations(input_vector)
+#	update_animations(input_vector) # TODO: delete this?
 	move()
-	polarity_check()
+	apply_polarity()
 
 func get_input_vector():
 	var input_vector = Vector2.ZERO
@@ -80,7 +81,6 @@ func apply_gravity(delta):
 		
 func update_animations(input_vector):
 #	print('updating animations')
-	pass
 #	var facing = sign(get_local_mouse_position().x)
 #	if facing != 0:
 #		sprite.scale.x = facing
@@ -94,6 +94,7 @@ func update_animations(input_vector):
 #
 #	if not is_on_floor():
 #		spriteAnimator.play("Jump")
+	pass
 
 func move():
 	var was_in_air = not is_on_floor()
@@ -112,20 +113,18 @@ func move():
 		motion.y = 0
 		position.y = last_position.y
 		jumpTimer.start()
-	
-	# Prevent Sliding (hack)
-#	if is_on_floor() and get_floor_velocity().length() == 0 and abs(motion.x) < 1:
-#		position.x = last_position.x
 
-func polarity_check():
+func apply_polarity():
 	if Input.is_action_just_pressed("move_down_player" + str(player_id)):
 		print('magnetic force is now activated. north and south poles are magnetized')
+		is_magnetized = true
 
 func rotate_player():
-#	var ninety_degrees = 90
 	var degree_rate = 5
 	self.rotation_degrees += degree_rate * direction 
-#	while ninety_degrees > 0:
-#		self.rotation_degrees += degree_rate
-#		ninety_degrees -= degree_rate
-#		yield(get_tree().create_timer(0.2), "timeout")
+
+func _on_NorthPole_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.
+
+func _on_SouthPole_area_entered(area: Area2D) -> void:
+	pass # Replace with function body.
