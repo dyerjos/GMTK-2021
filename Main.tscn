@@ -1,12 +1,19 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Fonts/MinimalFont5x7.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/Gamer.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Scripts/StartScreen.gd" type="Script" id=3]
+[ext_resource path="res://Sprites/red-blue-magnet.png" type="Texture" id=4]
 
 [sub_resource type="DynamicFont" id=3]
 size = 32
 font_data = ExtResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 16, 7 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 12.9575, 6.98061 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -53,12 +60,13 @@ text = "Time"
 [node name="World" type="Node2D" parent="."]
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 115.296, 80.9823 )
+position = Vector2( 139.554, 66.9903 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="PlaceholderSprite" type="ColorRect" parent="Player"]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 color = Color( 0.729412, 0.172549, 0.172549, 1 )
@@ -67,17 +75,33 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="Player"]
+texture = ExtResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
-
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="Player"]
+[node name="BodyCollision" type="CollisionShape2D" parent="Player"]
+position = Vector2( 0, -0.181976 )
+shape = SubResource( 4 )
 
 [node name="Label" type="Label" parent="Player"]
+visible = false
 margin_right = 40.0
 margin_bottom = 14.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SouthPole" type="Area2D" parent="Player"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/SouthPole"]
+position = Vector2( 13.1032, -0.363983 )
+shape = SubResource( 5 )
+
+[node name="NorthPole" type="Area2D" parent="Player"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/NorthPole"]
+position = Vector2( -12.7392, -0.545975 )
+shape = SubResource( 5 )
 
 [node name="ScreenBoundary" type="StaticBody2D" parent="."]
 
