@@ -105,6 +105,8 @@ visible = false
 position = Vector2( -12.7392, -0.545975 )
 shape = SubResource( 5 )
 
+[node name="JumpTimer" type="Timer" parent="Player"]
+
 [node name="ScreenBoundary" type="StaticBody2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ScreenBoundary"]
