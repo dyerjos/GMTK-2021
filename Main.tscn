@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Fonts/MinimalFont5x7.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/Gamer.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Scripts/StartScreen.gd" type="Script" id=3]
 [ext_resource path="res://Sprites/red-blue-magnet.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=5]
 
 [sub_resource type="DynamicFont" id=3]
 size = 32
@@ -60,7 +61,8 @@ text = "Time"
 [node name="World" type="Node2D" parent="."]
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 139.554, 66.9903 )
+position = Vector2( 82.4093, 210.033 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_group_": true
 }
