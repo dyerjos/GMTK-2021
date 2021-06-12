@@ -80,6 +80,7 @@ __meta__ = {
 texture = ExtResource( 4 )
 
 [node name="BodyCollision" type="CollisionShape2D" parent="Player"]
+visible = false
 position = Vector2( 0, -0.181976 )
 shape = SubResource( 4 )
 
@@ -106,6 +107,58 @@ position = Vector2( -12.7392, -0.545975 )
 shape = SubResource( 5 )
 
 [node name="JumpTimer" type="Timer" parent="Player"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Player2" type="KinematicBody2D" parent="."]
+modulate = Color( 0.686275, 1, 0, 1 )
+position = Vector2( 254.361, 211.189 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
+player_id = 2
+
+[node name="PlaceholderSprite" type="ColorRect" parent="Player2"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+color = Color( 0.729412, 0.172549, 0.172549, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Player2"]
+texture = ExtResource( 4 )
+
+[node name="BodyCollision" type="CollisionShape2D" parent="Player2"]
+visible = false
+position = Vector2( 0, -0.181976 )
+shape = SubResource( 4 )
+
+[node name="Label" type="Label" parent="Player2"]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SouthPole" type="Area2D" parent="Player2"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player2/SouthPole"]
+position = Vector2( 13.1032, -0.363983 )
+shape = SubResource( 5 )
+
+[node name="NorthPole" type="Area2D" parent="Player2"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player2/NorthPole"]
+position = Vector2( -12.7392, -0.545975 )
+shape = SubResource( 5 )
+
+[node name="JumpTimer" type="Timer" parent="Player2"]
 wait_time = 0.2
 one_shot = true
 
