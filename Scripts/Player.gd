@@ -9,6 +9,7 @@ export (float) var FRICTION = 0.25
 export (int) var GRAVITY = 800
 export (int) var JUMP_FORCE = 300
 export (int) var MAX_SLOPE_ANGLE = 46
+export (String) var greenColor = "afff00" # player 2 color
 
 var motion = Vector2.ZERO
 var snap_vector = Vector2.ZERO
@@ -18,6 +19,10 @@ var just_jumped = false
 var double_jump = true
 
 onready var jumpTimer = $JumpTimer
+
+func _ready() -> void:
+	if player_id == 2:
+		self.modulate = greenColor
 
 func _physics_process(delta):
 	just_jumped = false
