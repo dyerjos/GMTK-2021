@@ -49,35 +49,11 @@ shape = SubResource( 2 )
 wait_time = 0.2
 one_shot = true
 
-[node name="NorthAdjacentPosition" type="ReferenceRect" parent="."]
-margin_left = -48.8483
-margin_top = -6.61716
-margin_right = -16.8483
-margin_bottom = 7.38284
-border_width = 1.2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SouthAdjacentPosition" type="ReferenceRect" parent="."]
-margin_left = 17.1811
-margin_top = -7.236
-margin_right = 49.1811
-margin_bottom = 6.764
-border_color = Color( 0, 0.647059, 1, 1 )
-border_width = 1.2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="NorthGravityPoint" type="Position2D" parent="."]
 position = Vector2( -17.114, 0.63385 )
 
 [node name="SouthGravityPoint" type="Position2D" parent="."]
 position = Vector2( 17.114, 0.38031 )
-
-[node name="RepelTimer" type="Timer" parent="."]
-one_shot = true
 
 [connection signal="area_entered" from="SouthPole" to="." method="_on_SouthPole_area_entered"]
 [connection signal="area_entered" from="NorthPole" to="." method="_on_NorthPole_area_entered"]
