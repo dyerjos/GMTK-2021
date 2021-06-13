@@ -1,0 +1,6 @@
+[gd_scene format=2]
+
+[node name="NorthJoint" type="DampedSpringJoint2D"]
+position = Vector2( -20.5368, 0.950783 )
+rotation = 1.5708
+length = 10.0

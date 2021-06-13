@@ -129,5 +129,3 @@ margin_bottom = 52.0
 text = "Two Player"
 
 [node name="Player2Position" type="Position2D" parent="StartScreen"]
-
-[editable path="Player2"]
