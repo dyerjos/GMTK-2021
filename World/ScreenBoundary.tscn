@@ -1,0 +1,7 @@
+[gd_scene format=2]
+
+[node name="ScreenBoundary" type="StaticBody2D"]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 400.932, 0.283081, 0.255585, -0.0403137, 1.22575, 239.589, 399.961, 240.559, 400.932, 3.84033, 407.723, 3.19356, 409.016, 245.41, -8.79924, 245.41, -6.21215, -6.18465, 409.016, -5.86127 )

@@ -21,9 +21,11 @@ var players_active_side = null
 var repel_or_attract = null
 var influence_direction
 var currentTotalForce : Vector2 = Vector2(0,0)
+var winner = null
 
 onready var jumpTimer = $JumpTimer
 onready var repelTimer = $RepelTimer
+onready var label = get_parent().get_node("HUD/CenterContainer/Time")
 
 func _ready() -> void:
 	if player_id == 2:
@@ -39,7 +41,9 @@ func _physics_process(delta):
 	move()
 	apply_polarity()
 	apply_magnetism()
-
+	death_check()
+	winner_check()
+	apply_pace()
 
 func get_input_vector():
 	var input_vector = Vector2.ZERO
@@ -80,7 +84,7 @@ func move():
 	var was_on_floor = is_on_floor()
 	var last_motion = motion
 	var last_position = position
-	
+
 	motion = move_and_slide_with_snap(motion, snap_vector*4, Vector2.UP, true, 4, deg2rad(MAX_SLOPE_ANGLE))
 	# Landing
 	if was_in_air and is_on_floor():
@@ -116,11 +120,11 @@ func _on_SouthPole_area_entered(area: Area2D):
 	if "NorthPole" in area.name and is_magnetized and player_id == 1:
 		repel_or_attract = "attract"
 		players_active_side = self.get_node("NorthGravityPoint")
-	
+
 	if "SouthPole" in area.name and is_magnetized:
 		repel_or_attract = "repel"
 		players_active_side = self.get_node("SouthGravityPoint")
-		
+
 func apply_magnetism():
 	if other_players_active_side and players_active_side:
 		var other_parent = other_players_active_side.get_parent()
@@ -139,7 +143,21 @@ func apply_magnetism():
 			repel_or_attract = null
 			other_players_active_side = null
 			players_active_side = null
-			
-		
+
 func add_central_force(toAdd : Vector2):
 	currentTotalForce += toAdd
+
+func death_check():
+	if self.global_position.x < -5 or self.global_position.x > 425:
+		if player_id == 1:
+			GameManager.winner = 2
+			winner = 2
+		else: 
+			GameManager.winner = 1
+			winner = 1
+func winner_check():
+	if winner:
+		label.text = "Player %s is the winner!" % winner
+
+func apply_pace():
+	scale += Vector2(0.0008, 0.0008)

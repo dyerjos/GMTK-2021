@@ -1,0 +1,72 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Levels/EndGame.gd" type="Script" id=1]
+
+[node name="EndGame" type="Panel"]
+pause_mode = 2
+margin_left = 100.0
+margin_top = 50.5085
+margin_right = 300.0
+margin_bottom = 150.509
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_right = 200.0
+margin_bottom = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+margin_left = 31.0
+margin_top = 27.0
+margin_right = 169.0
+margin_bottom = 73.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_right = 138.0
+margin_bottom = 14.0
+alignment = 1
+
+[node name="ThankYouMsg" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer2"]
+margin_right = 138.0
+margin_bottom = 14.0
+text = "Thank you for playing!"
+
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 138.0
+margin_bottom = 22.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+margin_top = 26.0
+margin_right = 138.0
+margin_bottom = 46.0
+alignment = 1
+
+[node name="PlayAgainButton" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 8.0
+margin_right = 85.0
+margin_bottom = 20.0
+text = "Play Again"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 89.0
+margin_right = 129.0
+margin_bottom = 20.0
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/PlayAgainButton" to="." method="_on_PlayAgainButton_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]

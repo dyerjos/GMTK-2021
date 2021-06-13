@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Fonts/MinimalFont5x7.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Fonts/Gamer.ttf" type="DynamicFontData" id=2]
@@ -17,17 +17,20 @@ font_data = ExtResource( 1 )
 size = 32
 font_data = ExtResource( 2 )
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 199.775, 5.2211 )
+
 [node name="Main" type="Node2D"]
 
 [node name="ScreenBackground" type="ColorRect" parent="."]
 margin_right = 400.0
 margin_bottom = 240.0
+color = Color( 0.67451, 0.619608, 0.619608, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HUD" type="Control" parent="."]
-visible = false
 margin_right = 400.0
 margin_bottom = 240.0
 __meta__ = {
@@ -43,27 +46,21 @@ __meta__ = {
 }
 
 [node name="Time" type="Label" parent="HUD/CenterContainer"]
-margin_left = 175.0
+margin_left = 200.0
 margin_top = 2.0
-margin_right = 225.0
+margin_right = 200.0
 margin_bottom = 28.0
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Time"
 
 [node name="World" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 90.6414, 186.002 )
+position = Vector2( 91.337, 141.716 )
 
 [node name="Player2" parent="." instance=ExtResource( 4 )]
-position = Vector2( 288.971, 231.474 )
+position = Vector2( 311.23, 145.915 )
 player_id = 2
-
-[node name="ScreenBoundary" type="StaticBody2D" parent="."]
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ScreenBoundary"]
-polygon = PoolVector2Array( 400.932, 0.283081, 0.255585, -0.0403137, 1.22575, 239.589, 399.961, 240.559, 400.932, 3.84033, 407.723, 3.19356, 409.016, 245.41, -8.79924, 245.41, -6.21215, -6.18465, 409.016, -5.86127 )
 
 [node name="StartScreen" type="Node2D" parent="."]
 visible = false
@@ -117,15 +114,18 @@ margin_top = 50.0
 margin_right = 200.0
 margin_bottom = 50.0
 
-[node name="SinglePlayer" type="Button" parent="StartScreen/CenterContainer/VSplitContainer"]
-margin_right = 93.0
-margin_bottom = 20.0
-text = "Single Player"
-
 [node name="TwoPlayer" type="Button" parent="StartScreen/CenterContainer/VSplitContainer"]
-margin_top = 32.0
-margin_right = 93.0
-margin_bottom = 52.0
-text = "Two Player"
+pause_mode = 2
+margin_right = 122.0
+margin_bottom = 20.0
+text = "Two Player Battle"
 
 [node name="Player2Position" type="Position2D" parent="StartScreen"]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2( 199.072, 243.942 )
+shape = SubResource( 4 )
+
+[connection signal="pressed" from="StartScreen/CenterContainer/VSplitContainer/TwoPlayer" to="StartScreen" method="_on_TwoPlayer_pressed"]
